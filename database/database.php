@@ -1,9 +1,10 @@
 <?php
+require "./config/config.php";
 try {
-
-    $dsn = "mysql:host={$servername};dbname=" . $dbname;
-    $conn = new PDO($dsn, $username, $pass);
-
-} catch (PDOException $e) {
-    die("cant connect to database");
+    // Create a PDO connection to the database
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $pass);
+    // Set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }

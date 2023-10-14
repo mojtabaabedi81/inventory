@@ -1,4 +1,6 @@
 <?php
 
-require('template/login_register.php');
-
+function loginPage()
+{
+    view("login_register");
+}

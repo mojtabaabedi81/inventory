@@ -1,12 +1,12 @@
 body{
-    background-color: #1cbb9b;
+    background-color: #213330;
 }
 .login-box{
     position:relative;
     margin: 10px auto;
     width: 500px;
     height: 380px;
-    background-color: #fff;
+    background-color: #263b37;
     padding: 10px;
     border-radius: 3px;
     -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.33);

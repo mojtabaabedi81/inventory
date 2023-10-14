@@ -1,11 +1,11 @@
 <?php
-function dd ($data)
-{
-    echo "<pre style='background-color: black; color: #dedede'>";
-    echo json_encode($data);
-    echo "</pre>";
+function dd($value) {
+    echo '<pre>';
+    var_dump($value);
+    echo '</pre>';
     die();
 }
+
 
 function post($key)
 {

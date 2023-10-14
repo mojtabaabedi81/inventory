@@ -20,18 +20,18 @@ function create_users_table()
 }
 
 
-function create_todo_table()
+function create_inventory_table()
 {
     global $conn;
 
     $query = "
-    CREATE TABLE todo (
+    CREATE TABLE inventory (
     id int NOT NULL AUTO_INCREMENT,
-    name text,
-    email varchar(256),
-    user_id int,
-    status int,
-    created_at datetime,
+    productID text,
+    productName varchar(256),
+    category int,
+    quantity int,
+    price datetime,
     primary key (id)
     );
     ";
