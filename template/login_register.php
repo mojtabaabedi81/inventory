@@ -39,12 +39,13 @@
                             <i class="fa fa-google-plus fa-lg"></i> Login with Google
                         </a>
                     </div>
-                    <form action="./user/login" method="post" class="email-login">
+                    <form action="#" method="post" name="login" class="email-login">
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Email">
+                            <input type="hidden" name="loginRequest" value="1">
+                            <input type="email" name="email" class="form-control" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Password">
+                            <input type="password" name="password" class="form-control" placeholder="Password">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary btn-block">Login</button>
@@ -54,15 +55,16 @@
                             <a href="#" class="forgot-password">Forgot password?</a>
                         </div>
                     </form>
-                    <form action="./user/register" method="post" class="email-signup">
+                    <form action="#" method="post" name="signup" class="email-signup">
+                        <input type="hidden" name="loginRequest" value="1">
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Email">
+                            <input type="email" name="email" class="form-control" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Password">
+                            <input type="password" name="password" class="form-control" placeholder="Password">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Confirm Password">
+                            <input type="password" name="password" class="form-control" placeholder="Confirm Password">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success btn-block">Sign Up</button>

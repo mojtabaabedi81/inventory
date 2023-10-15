@@ -17,7 +17,7 @@ if (isset($_GET['migrate']) and !empty($_GET['migrate'])) {
 
 
 $url = trim($_SERVER['REQUEST_URI'], '/');
-$path = !empty($url) ? $url : 'landing/loginPage';
+$path = !empty($url) ? $url : 'user/login';
 $query_params = explode('?', $path);
 
 
@@ -25,16 +25,14 @@ if (!empty($query_params[1])) {
     $path = explode('?', $path);
 }
 list($controller, $method) = explode('/', $path);
+
 $file = __DIR__ . "/controller/{$controller}_controller.php";
 
 if (file_exists($file)) {
     require $file;
+    $method($_REQUEST);
 } else {
     die('something went wrong');
 }
 
-if (function_exists($method)) {
-    $method($_REQUEST);
-} else {
-    trigger_error("function not found : $method,E_USER_ERROR");
-}
+

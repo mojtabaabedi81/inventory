@@ -1,13 +1,12 @@
 <?php
-function create_user($firstname , $password, $email)
+function create_user($email,$password)
 {
     global $conn;
-    $sql = "INSERT INTO users (name, lastname, password, email ) values (:name  , :password , :email)";
+    $sql = "INSERT INTO users ( password, email) values (:password , :email)";
     $stmt = $conn->prepare($sql);
     $stmt->execute([
-        'name' => $firstname,
-        'password' => $password,
         'email' => $email,
+        'password' => $password,
     ]);
     return $stmt->rowcount();
 }
