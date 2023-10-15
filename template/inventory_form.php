@@ -64,14 +64,14 @@
 
 <div class="container">
     <!-- Inventory item input form -->
-    <form id="inventoryForm" action="controller/inventoryTable_controller.php" method="post">
+    <form id="inventoryForm" action="./inventoryTable/add_inventory" method="post">
         <div class="form-group">
             <label for="productId">Product ID:</label>
             <input type="text" id="productId" name="productId" class="form-control">
         </div>
         <div class="form-group">
             <label for="productName">Product Name:</label>
-            <input type="text" id="productName" name="productName" class="form-control">
+            <input type="text" id="productName" name = "productName" class="form-control">
         </div>
         <div class="form-group">
             <label for="productCategory">Category:</label>
@@ -85,7 +85,7 @@
             <label for="productPrice">Price:</label>
             <input type="number" step="0.01" id="productPrice" name="productPrice" class="form-control">
         </div>
-        <button type="button" class="btn btn-primary" onclick="addItem()">Add Item</button>
+        <button type="submit" class="btn btn-primary">Add Item</button>
         <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
         <button type="button" class="btn btn-success" onclick="exportInventoryToExcel()">Export to Excel</button>
     </form>
