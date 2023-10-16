@@ -71,7 +71,7 @@
         </div>
         <div class="form-group">
             <label for="productName">Product Name:</label>
-            <input type="text" id="productName" name = "productName" class="form-control">
+            <input type="text" id="productName" name="productName" class="form-control">
         </div>
         <div class="form-group">
             <label for="productCategory">Category:</label>
@@ -92,74 +92,87 @@
 
     <!-- Inventory list to display added items -->
     <h2>Inventory List</h2>
-    <ul id="inventoryList">
-        <!-- Inventory items will be displayed here -->
-    </ul>
-</div>
+    <div class="container">
+        <ul id="inventoryList">
+            <?php
+            require_once __DIR__ . "/../controller/inventoryTable_controller.php";
+            $inventoryData = fetch_from_database();
+            foreach ($inventoryData as $item) {
+                $timestamp = date('Y-m-d H:i:s', strtotime($item['inserted_at']));
+                echo '<li><strong>ID:</strong>' . $item['product_id'] .
+                    ',<strong>Name:</strong> ' . $item['product_name'] .
+                    ',<strong>Category:</strong>' . $item['product_category'] .
+                    ',<strong>Quantity:</strong>' . $item['product_quantity'] .
+                    ',<strong>Price:</strong> $' . $item['product_price'] .
+                ',<strong>Inserted At:</strong> ' . $timestamp . '</li>';
+            }
+            ?>
+        </ul>
+    </div>
 
-<script>
-    // Function for add a new item to the inventory list
-    function addItem() {
-        // Get input values
-        var productId = document.getElementById('productId').value;
-        var productName = document.getElementById('productName').value;
-        var productCategory = document.getElementById('productCategory').value;
-        var productQuantity = document.getElementById('productQuantity').value;
-        var productPrice = document.getElementById('productPrice').value;
+    <script>
+        // Function for add a new item to the inventory list
+        function addItem() {
+            // Get input values
+            var productId = document.getElementById('productId').value;
+            var productName = document.getElementById('productName').value;
+            var productCategory = document.getElementById('productCategory').value;
+            var productQuantity = document.getElementById('productQuantity').value;
+            var productPrice = document.getElementById('productPrice').value;
 
-        // Create a new list item to display the item
-        var listItem = document.createElement('li');
-        listItem.innerHTML =
-            '<strong>ID:</strong> ' + productId +
-            ', <strong>Name:</strong> ' + productName +
-            ', <strong>Category:</strong> ' + productCategory +
-            ', <strong>Quantity:</strong> ' + productQuantity +
-            ', <strong>Price:</strong> $' + productPrice;
+            // Create a new list item to display the item
+            var listItem = document.createElement('li');
+            listItem.innerHTML =
+                '<strong>ID:</strong> ' + productId +
+                ', <strong>Name:</strong> ' + productName +
+                ', <strong>Category:</strong> ' + productCategory +
+                ', <strong>Quantity:</strong> ' + productQuantity +
+                ', <strong>Price:</strong> $' + productPrice;
 
-        // Add the list item to the inventory list
-        document.getElementById('inventoryList').appendChild(listItem);
+            // Add the list item to the inventory list
+            document.getElementById('inventoryList').appendChild(listItem);
 
-        // Clear the form
-        clearForm();
-    }
+            // Clear the form
+            clearForm();
+        }
 
-    // Function to clear the input form
-    function clearForm() {
-        document.getElementById('productId').value = '';
-        document.getElementById('productName').value = '';
-        document.getElementById('productCategory').value = '';
-        document.getElementById('productQuantity').value = '';
-        document.getElementById('productPrice').value = '';
-    }
+        // Function to clear the input form
+        function clearForm() {
+            document.getElementById('productId').value = '';
+            document.getElementById('productName').value = '';
+            document.getElementById('productCategory').value = '';
+            document.getElementById('productQuantity').value = '';
+            document.getElementById('productPrice').value = '';
+        }
 
-    // Function to export the inventory to Excel
-    function exportInventoryToExcel() {
-        var data = [];
-        // Get inventory list items
-        var inventoryListItems = document.querySelectorAll('#inventoryList li');
+        // Function to export the inventory to Excel
+        function exportInventoryToExcel() {
+            var data = [];
+            // Get inventory list items
+            var inventoryListItems = document.querySelectorAll('#inventoryList li');
 
-        // Push column headers
-        data.push(["Product ID", "Product Name", "Category", "Quantity", "Price"]);
+            // Push column headers
+            data.push(["Product ID", "Product Name", "Category", "Quantity", "Price"]);
 
-        // Push inventory data
-        inventoryListItems.forEach((item) => {
-            var itemData = item.textContent.split(', ');
-            data.push(itemData);
-        });
+            // Push inventory data
+            inventoryListItems.forEach((item) => {
+                var itemData = item.textContent.split(', ');
+                data.push(itemData);
+            });
 
-        // Create a data URI for the Excel file
-        var csvContent = "data:text/csv;charset=utf-8," + data.map(e => e.join(",")).join("\n");
-        var encodedUri = encodeURI(csvContent);
+            // Create a data URI for the Excel file
+            var csvContent = "data:text/csv;charset=utf-8," + data.map(e => e.join(",")).join("\n");
+            var encodedUri = encodeURI(csvContent);
 
-        // Create a download link for the Excel file
-        var link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "inventory.csv");
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-</script>
+            // Create a download link for the Excel file
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "inventory.csv");
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
 </body>
 </html>

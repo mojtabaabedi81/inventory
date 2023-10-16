@@ -14,7 +14,7 @@ function add_inventory()
         global $conn;
 
         // Prepare an SQL statement for insertion
-        $stmt = $conn->prepare("INSERT INTO inventory_table (product_id, product_name, product_category, product_quantity, product_price) VALUES (:productId, :productName, :productCategory, :productQuantity, :productPrice)");
+        $stmt = $conn->prepare("INSERT INTO inventory_table (product_id, product_name, product_category, product_quantity, product_price,inserted_at) VALUES (:productId, :productName, :productCategory, :productQuantity, :productPrice,NOW())");
 
         // Bind parameters
         $stmt->bindParam(':productId', $productId);
@@ -28,4 +28,17 @@ function add_inventory()
 
         echo 'Data inserted successfully.';
     }
+}
+
+function fetch_from_database()
+{
+    global $conn;
+
+    $query = "SELECT * FROM inventory_table";
+    $stmt = $conn->query($query);
+
+    // Fetch the inventory items
+    $inventoryData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $inventoryData;
 }
