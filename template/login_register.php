@@ -9,9 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../assets/Style.css">
     <style>
-        /* Add your CSS styling here */
+
         .email-signup {
-            display: none; /* Hide the Sign Up form by default */
+            display: none;
         }
     </style>
 </head>
@@ -77,7 +77,7 @@
 </div>
 
 <script>
-    // JavaScript to toggle between Login and Sign Up forms
+
     document.getElementById("signup-box-link").addEventListener("click", function () {
         document.querySelector(".email-login").style.display = "none";
         document.querySelector(".email-signup").style.display = "block";
