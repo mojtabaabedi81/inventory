@@ -56,8 +56,8 @@
                         </div>
                     </form>
                     <form action="#" method="post" name="signup" class="email-signup">
-                        <input type="hidden" name="loginRequest" value="1">
                         <div class="form-group">
+                            <input type="hidden" name="registerRequest" value="1">
                             <input type="email" name="email" class="form-control" placeholder="Email">
                         </div>
                         <div class="form-group">

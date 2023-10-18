@@ -17,7 +17,7 @@ if (isset($_GET['migrate']) and !empty($_GET['migrate'])) {
 
 
 $url = trim($_SERVER['REQUEST_URI'], '/');
-$path = !empty($url) ? $url : 'user/login';
+$path = !empty($url) ? $url : "user/register";
 $query_params = explode('?', $path);
 
 

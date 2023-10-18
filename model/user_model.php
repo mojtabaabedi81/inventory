@@ -2,7 +2,7 @@
 function create_user($email,$password)
 {
     global $conn;
-    $sql = "INSERT INTO users ( password, email) values (:password , :email)";
+    $sql = "INSERT INTO users ( password, email) VALUES (:password , :email)";
     $stmt = $conn->prepare($sql);
     $stmt->execute([
         'email' => $email,

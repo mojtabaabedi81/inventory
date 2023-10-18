@@ -22,7 +22,9 @@ function login()
 
 function register()
 {
-    if (post('registerRequest')) {
+    $email = post('email');
+
+    if (post('email')) {
         $email = post('email');
         $password = post('password');
 
@@ -30,17 +32,13 @@ function register()
             echo "Please fill in all required fields.";
         } else {
 
-            if (user_exists($email)) {
-                create_user(post('email'),post('password'));
-            } else {
-
-
-                echo "Registration successful! Please log in.";
-
+            if (!user_exists($email)) {
+                create_user(post('email'),md5(post('password')));
             }
+            view('inventory_form');
         }
     } else {
-
+        echo "this account already exist";
         view("login_register");
     }
 }
