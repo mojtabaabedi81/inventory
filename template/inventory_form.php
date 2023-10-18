@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Inventory</title>
     <style>
         h1 {
@@ -154,17 +155,23 @@
 
         var inventoryList = document.getElementById('inventoryList');
         var items = inventoryList.getElementsByTagName('li');
+
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             var itemId = item.getElementsByTagName('strong')[0].textContent.split(':')[1].trim();
+
             if (itemId === productId) {
+                var editedName = item.getElementsByTagName('input')[0].value;
+                var editedCategory = item.getElementsByTagName('input')[1].value;
+                var editedQuantity = item.getElementsByTagName('input')[2].value;
+                var editedPrice = item.getElementsByTagName('input')[3].value;
 
                 item.innerHTML =
                     '<strong>ID:</strong> ' + productId +
-                    ', <strong>Name:</strong> <input type="text" id="editedName" value="' + item.getElementsByTagName('strong')[2].textContent.split(':')[1].trim() + '">' +
-                    ', <strong>Category:</strong> <input type="text" id="editedCategory" value="' + item.getElementsByTagName('strong')[4].textContent.split(':')[1].trim() + '">' +
-                    ', <strong>Quantity:</strong> <input type="number" id="editedQuantity" value="' + item.getElementsByTagName('strong')[6].textContent.split(':')[1].trim() + '">' +
-                    ', <strong>Price:</strong> <input type="number" step="0.01" id="editedPrice" value="' + item.getElementsByTagName('strong')[8].textContent.split(':')[1].trim() + '">' +
+                    ', <strong>Name:</strong> <input type="text" id="editedName" value="' + editedName + '">' +
+                    ', <strong>Category:</strong> <input type="text" id="editedCategory" value="' + editedCategory + '">' +
+                    ', <strong>Quantity:</strong> <input type="number" id="editedQuantity" value="' + editedQuantity + '">' +
+                    ', <strong>Price:</strong> <input type="number" step="0.01" id="editedPrice" value="' + editedPrice + '">' +
                     ' <button onclick="saveEdit(' + productId + ')">Save</button>' +
                     ' <button onclick="deleteItem(' + productId + ')">Delete</button>';
                 break;
@@ -178,6 +185,19 @@
         var editedCategory = document.getElementById('editedCategory').value;
         var editedQuantity = document.getElementById('editedQuantity').value;
         var editedPrice = document.getElementById('editedPrice').value;
+
+        var editeData = {
+            productId: productId,
+            editedName: editedName,
+            editedCategory: editedCategory,
+            editedQuantity: editedQuantity,
+            editedPrice: editedPrice
+        };
+
+        // $.post('./inventoryTable/update_inventory'editeData, {"productId": productId}).done(function (response) {
+        //     console.log(response);
+        // });
+
 
         var inventoryList = document.getElementById('inventoryList');
         var items = inventoryList.getElementsByTagName('li');
@@ -200,30 +220,10 @@
 
     function deleteItem(productId) {
 
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', './inventoryTable/delete_inventory', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
 
-
-        var data = JSON.stringify({productId: productId});
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-
-                var response = JSON.parse(xhr.responseText);
-                if (response.success) {
-
-                    var item = document.getElementById('item-' + productId);
-                    item.parentNode.removeChild(item);
-                } else {
-
-                    console.error('Item deletion failed.');
-                }
-            }
-        }
-
-
-        xhr.send(data);
+        $.post('./inventoryTable/delete_inventory', {"productId": productId}).done(function (response) {
+            console.log(response);
+        });
     }
 
 

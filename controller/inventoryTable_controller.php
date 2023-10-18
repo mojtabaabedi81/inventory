@@ -27,6 +27,7 @@ function add_inventory()
         $stmt->execute();
 
         echo 'Data inserted successfully.';
+
     }
 }
 
@@ -43,17 +44,23 @@ function fetch_from_database()
     return $inventoryData;
 }
 
-function delete_inventory()
+function delete_inventory($data)
 {
     global $conn;
-
-    $query = "DELETE FROM inventory WHERE product_id = ?";
+    $productId = post('productId');
+    $query = "DELETE FROM inventory_table WHERE product_id = :product_id";
     $stmt = $conn->prepare($query);
-    $stmt->bindParam("s" , $productId);
+//    $stmt->bindParam("s" , $productId);
 
-    if ($stmt->execute()) {
+    if ($stmt->execute(['product_id' => $productId])) {
         echo json_encode(array('message' => 'Item deleted successfully'));
     }else {
         echo json_encode(array('message'=>'Item deletion failed'));
     }
+}
+
+
+function update_inventory ()
+{
+
 }
