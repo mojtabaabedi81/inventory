@@ -5,6 +5,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../assets/Style.css">
@@ -39,7 +40,7 @@
                             <i class="fa fa-google-plus fa-lg"></i> Login with Google
                         </a>
                     </div>
-                    <form action="#" method="post" name="login" class="email-login">
+                    <form action="user/login" method="post" name="login" class="email-login">
                         <div class="form-group">
                             <input type="hidden" name="loginRequest" value="1">
                             <input type="email" name="email" class="form-control" placeholder="Email">
@@ -55,7 +56,7 @@
                             <a href="#" class="forgot-password">Forgot password?</a>
                         </div>
                     </form>
-                    <form action="#" method="post" name="signup" class="email-signup">
+                    <form action="user/register" method="post" name="signup" class="email-signup">
                         <div class="form-group">
                             <input type="hidden" name="registerRequest" value="1">
                             <input type="email" name="email" class="form-control" placeholder="Email">

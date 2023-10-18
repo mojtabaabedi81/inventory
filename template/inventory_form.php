@@ -64,7 +64,7 @@
 
 <div class="container">
 
-    <form id="inventoryForm" action="./inventoryTable/add_inventory" method="post">
+    <form id="inventoryForm" action="/inventoryTable/add_inventory" method="post">
         <div class="form-group">
             <label for="productId">Product ID:</label>
             <input type="text" id="productId" name="productId" class="form-control">
@@ -194,7 +194,7 @@
             editedPrice: editedPrice
         };
 
-        $.post('./inventoryTable/update_inventory',editeData).done(function (response) {
+        $.post('/inventoryTable/update_inventory',editeData).done(function (response) {
             console.log(response);
         });
 
@@ -221,7 +221,7 @@
     function deleteItem(productId) {
 
 
-        $.post('./inventoryTable/delete_inventory', {"productId": productId}).done(function (response) {
+        $.post('/inventoryTable/delete_inventory', {"productId": productId}).done(function (response) {
             console.log(response);
         });
     }

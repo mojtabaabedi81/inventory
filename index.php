@@ -14,10 +14,8 @@ if (isset($_GET['migrate']) and !empty($_GET['migrate'])) {
     var_dump(create_users_table());
     return;
 }
-
-
 $url = trim($_SERVER['REQUEST_URI'], '/');
-$path = !empty($url) ? $url : "user/register";
+$path = !empty($url) ? $url : "user/login";
 $query_params = explode('?', $path);
 
 

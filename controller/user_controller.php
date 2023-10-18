@@ -4,6 +4,7 @@ function login()
 {
     session_start();
     if (post('loginRequest')) {
+        $_SESSION['user_email'] = post('email');
         if (user_exists(post('email'))) {
             $login = user_login(post('email'), post('password'));
             if ($login) {
@@ -33,7 +34,7 @@ function register()
         } else {
 
             if (!user_exists($email)) {
-                create_user(post('email'),md5(post('password')));
+                create_user(post('email'), md5(post('password')));
             }
             view('inventory_form');
         }
