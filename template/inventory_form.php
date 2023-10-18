@@ -194,9 +194,9 @@
             editedPrice: editedPrice
         };
 
-        // $.post('./inventoryTable/update_inventory'editeData, {"productId": productId}).done(function (response) {
-        //     console.log(response);
-        // });
+        $.post('./inventoryTable/update_inventory',editeData).done(function (response) {
+            console.log(response);
+        });
 
 
         var inventoryList = document.getElementById('inventoryList');

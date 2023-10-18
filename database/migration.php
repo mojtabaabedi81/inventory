@@ -16,7 +16,7 @@ function create_users_table()
 
     ";
 
-    return mysqli_query($conn, $query);
+    return $conn->prepare($query);
 }
 
 
@@ -36,5 +36,5 @@ function create_inventory_table()
     );
     ";
 
-    return mysqli_query($conn, $query);
+    return $conn->prepare($query);
 }

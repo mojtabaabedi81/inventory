@@ -41,6 +41,6 @@ function register()
         }
     } else {
 
-        view("registration_form");
+        view("login_register");
     }
 }

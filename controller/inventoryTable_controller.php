@@ -5,8 +5,8 @@ function add_inventory()
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $productId = post('productId');
         $productName = post('productName');
+        $productId = post('productId');
         $productCategory = post('productCategory');
         $productQuantity = post('productQuantity');
         $productPrice = post('productPrice');
@@ -54,13 +54,13 @@ function delete_inventory($data)
 
     if ($stmt->execute(['product_id' => $productId])) {
         echo json_encode(array('message' => 'Item deleted successfully'));
-    }else {
-        echo json_encode(array('message'=>'Item deletion failed'));
+    } else {
+        echo json_encode(array('message' => 'Item deletion failed'));
     }
 }
 
 
-function update_inventory ()
+function update_inventory()
 {
 
 }
