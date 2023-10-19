@@ -22,10 +22,8 @@ function fetch_from_database()
 {
     global $conn;
 
-    $query = "SELECT * FROM inventory_table";
-    $stmt = $conn->query($query);
-
-
+    fetch_sql();
+    global $stmt;
     $inventoryData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return $inventoryData;
@@ -34,10 +32,10 @@ function fetch_from_database()
 function delete_inventory($data)
 {
     global $conn;
+    global $stmt;
     $productId = post('productId');
-    $query = "DELETE FROM inventory_table WHERE product_id = :product_id";
-    $stmt = $conn->prepare($query);
-//    $stmt->bindParam("s" , $productId);
+    delete_sql($productId);
+
 
     if ($stmt->execute(['product_id' => $productId])) {
         echo json_encode(array('message' => 'Item deleted successfully'));

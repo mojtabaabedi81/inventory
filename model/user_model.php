@@ -1,4 +1,5 @@
 <?php
+
 function create_user($email,$password)
 {
     global $conn;
@@ -56,3 +57,18 @@ function add_sql($productName ,$productId,$productCategory,$productQuantity,$pro
     $stmt->execute();
 }
 
+function fetch_sql ()
+{
+    global $conn;
+    global $stmt;
+
+    $query = "SELECT * FROM inventory_table";
+    $stmt = $conn->query($query);
+}
+function delete_sql ($productId)
+{
+    global $conn;
+    global $stmt;
+    $query = "DELETE FROM inventory_table WHERE product_id = :product_id";
+    $stmt = $conn->prepare($query);
+}
