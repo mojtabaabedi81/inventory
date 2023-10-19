@@ -11,20 +11,7 @@ function add_inventory()
         $productQuantity = post('productQuantity');
         $productPrice = post('productPrice');
 
-        global $conn;
-
-
-        $stmt = $conn->prepare("INSERT INTO inventory_table (product_id, product_name, product_category, product_quantity, product_price,inserted_at) VALUES (:productId, :productName, :productCategory, :productQuantity, :productPrice,NOW())");
-
-
-        $stmt->bindParam(':productId', $productId);
-        $stmt->bindParam(':productName', $productName);
-        $stmt->bindParam(':productCategory', $productCategory);
-        $stmt->bindParam(':productQuantity', $productQuantity);
-        $stmt->bindParam(':productPrice', $productPrice);
-
-
-        $stmt->execute();
+       add_sql($productName,$productId,$productCategory,$productQuantity,$productPrice);
 
         echo 'Data inserted successfully.';
 
@@ -60,7 +47,3 @@ function delete_inventory($data)
 }
 
 
-function update_inventory()
-{
-
-}

@@ -16,7 +16,7 @@ function create_users_table()
 
     ";
 
-    return $conn->prepare($query);
+    return $conn->query($query);
 }
 
 
@@ -36,5 +36,23 @@ function create_inventory_table()
     );
     ";
 
-    return $conn->prepare($query);
+    return $conn->query($query);
 }
+
+function createTableIfNotExist()
+{
+    global $conn;
+
+    $result = $conn->query("SHOW TABLES LIKE 'users'");
+    if ($result-> rowCount() == 0){
+
+        create_users_table();
+    }
+    $result = $conn->query("SHOW TABLES LIKE 'inventory_table'");
+    if ($result->rowCount() == 0 ){
+        create_inventory_table();
+    }
+
+}
+
+
