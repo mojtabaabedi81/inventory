@@ -152,6 +152,7 @@
 
 
     function editItem(productId) {
+        console.log("Edit button clicked for product for ID:" + productId);
 
         var inventoryList = document.getElementById('inventoryList');
         var items = inventoryList.getElementsByTagName('li');
@@ -161,10 +162,11 @@
             var itemId = item.getElementsByTagName('strong')[0].textContent.split(':')[1].trim();
 
             if (itemId === productId) {
-                var editedName = item.getElementsByTagName('input')[0].value;
-                var editedCategory = item.getElementsByTagName('input')[1].value;
-                var editedQuantity = item.getElementsByTagName('input')[2].value;
-                var editedPrice = item.getElementsByTagName('input')[3].value;
+                var itemData = item.textContent.split(', ');
+                var editedName = itemData[1].split(':')[1].trim();
+                var editedCategory = itemData[2].split(':')[1].trim();
+                var editedQuantity = itemData[3].split(':')[1].trim();
+                var editedPrice = itemData[4].split(':')[1].trim();
 
                 item.innerHTML =
                     '<strong>ID:</strong> ' + productId +
@@ -186,6 +188,11 @@
         var editedQuantity = document.getElementById('editedQuantity').value;
         var editedPrice = document.getElementById('editedPrice').value;
 
+        console.log("Edited Name:"+editedName);
+        console.log("Edited Category:" +editedCategory);
+        console.log("Edited Quantity:" +editedQuantity);
+        console.log("Edited Price:" +editedPrice);
+
         var editeData = {
             productId: productId,
             editedName: editedName,
@@ -194,10 +201,9 @@
             editedPrice: editedPrice
         };
 
-        $.post('/inventoryTable/update_inventory',editeData).done(function (response) {
+        $.post('/inventoryTable/update_inventory', editeData).done(function (response) {
             console.log(response);
         });
-
 
         var inventoryList = document.getElementById('inventoryList');
         var items = inventoryList.getElementsByTagName('li');

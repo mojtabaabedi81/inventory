@@ -40,7 +40,7 @@
                             <i class="fa fa-google-plus fa-lg"></i> Login with Google
                         </a>
                     </div>
-                    <form action="user/login" method="post" name="login" class="email-login">
+                    <form action="#" method="post" name="login" class="email-login">
                         <div class="form-group">
                             <input type="hidden" name="loginRequest" value="1">
                             <input type="email" name="email" class="form-control" placeholder="Email">

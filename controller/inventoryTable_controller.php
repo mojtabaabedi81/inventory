@@ -13,7 +13,7 @@ function add_inventory()
 
        add_sql($productName,$productId,$productCategory,$productQuantity,$productPrice);
 
-        echo 'Data inserted successfully.';
+            echo "Data add Successfully !!";
 
     }
 }

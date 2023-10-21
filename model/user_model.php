@@ -55,6 +55,7 @@ function add_sql($productName ,$productId,$productCategory,$productQuantity,$pro
 
 
     $stmt->execute();
+
 }
 
 function fetch_sql ()
