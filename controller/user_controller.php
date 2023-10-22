@@ -14,7 +14,7 @@ function login()
                 $login = user_login($email, $password);
                 if ($login) {
                     $_SESSION['user_email'] = $email;
-                    view("inventory_form");
+                    header("Location:inventoryTable/show");
                     exit();
                 } else {
                     echo "user or password wrong !";
@@ -41,10 +41,12 @@ function register()
         } else {
 
             if (!user_exists($email)) {
-                create_user(post('email'), md5(post('password')));
-                view('inventory_form');
+                create_user($email, md5($password));
+
+                header("Location: ../inventoryTable/show");
+
             } else
-                echo "this account already exist";
+            echo "this account already exist";
         }
     }
 
