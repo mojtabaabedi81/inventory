@@ -1,8 +1,11 @@
 <?php
 
+function show()
+{
+    view("inventory_form");
+}
 function add_inventory()
 {
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $productName = post('productName');
