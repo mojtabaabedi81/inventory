@@ -1,7 +1,7 @@
 <?php
 
 
-function create_users_table($query)
+function create_users_table()
 {
     global $conn;
 
@@ -14,13 +14,13 @@ function create_users_table($query)
     primary key (id)
     );
 
-    ";
+     ";
 
     return $conn->query($query);
 }
 
 
-function create_inventory_table($query)
+function create_inventory_table()
 {
     global $conn;
 
@@ -42,12 +42,12 @@ function createTableIfNotExist()
     global $conn;
 
     $result = $conn->query("SHOW TABLES LIKE 'users'");
-    if ($result-> rowCount() == 0){
+    if ($result->rowCount() == 0) {
 
         create_users_table();
     }
     $result = $conn->query("SHOW TABLES LIKE 'inventory_table'");
-    if ($result->rowCount() == 0 ){
+    if ($result->rowCount() == 0) {
         create_inventory_table();
     }
 
