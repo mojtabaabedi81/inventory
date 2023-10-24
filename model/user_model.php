@@ -44,7 +44,7 @@ function add_sql($productName ,$productId,$productCategory,$productQuantity,$pro
     global $conn;
 
 
-    $stmt = $conn->prepare("INSERT INTO inventory_table (product_id, product_name, product_category, product_quantity, product_price,inserted_at) VALUES (:productId, :productName, :productCategory, :productQuantity, :productPrice,NOW())");
+    $stmt = $conn->prepare("INSERT INTO inventory_table (productId, productName, productCategory , productQuantity , productPrice ,inserted_at) VALUES (:productId, :productName, :productCategory, :productQuantity, :productPrice,NOW())");
 
 
     $stmt->bindParam(':productId', $productId);
@@ -70,6 +70,6 @@ function delete_sql ($productId)
 {
     global $conn;
     global $stmt;
-    $query = "DELETE FROM inventory_table WHERE product_id = :product_id";
+    $query = "DELETE FROM inventory_table WHERE productId = :productId";
     $stmt = $conn->prepare($query);
 }

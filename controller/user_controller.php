@@ -2,11 +2,7 @@
 
 function login()
 {
-    session_start();
-    if (isset($_SESSION['user_email'])) {
-        view("inventory_form");
-    } else
-        if (post('loginRequest')) {
+    if (post('loginRequest')) {
             $email = post('email');
             $password = post('password');
 
@@ -14,7 +10,7 @@ function login()
                 $login = user_login($email, $password);
                 if ($login) {
                     $_SESSION['user_email'] = $email;
-                    header("Location:inventoryTable/show");
+                    header("Location:../inventoryTable/show");
                     exit();
                 } else {
                     echo "user or password wrong !";
@@ -24,7 +20,7 @@ function login()
                 echo "user not found !";
         } else
             view("loginForm");
-    session_destroy();
+
 }
 
 
@@ -46,7 +42,7 @@ function register()
                 header("Location: ../inventoryTable/show");
 
             } else
-            echo "this account already exist";
+                echo "this account already exist";
         }
     }
 

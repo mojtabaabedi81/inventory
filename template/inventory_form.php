@@ -89,6 +89,9 @@
         <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
         <button type="button" class="btn btn-success" onclick="exportInventoryToExcel()">Export to Excel</button>
     </form>
+    <form id="logoutForm" action="inventory/logout" method="post">
+        <button type="submit" class="btn btn-danger">Log Out</button>
+    </form>
 
 
     <h2>Inventory List</h2>
@@ -99,19 +102,37 @@
             $inventoryData = fetch_from_database();
             foreach ($inventoryData as $item) {
                 $timestamp = date('Y-m-d H:i:s', strtotime($item['inserted_at']));
-                echo '<li id="item-' . $item['product_id'] . '"><strong>ID:</strong>' . $item['product_id'] .
-                    ',<strong>Name:</strong> ' . $item['product_name'] .
-                    ',<strong>Category:</strong>' . $item['product_category'] .
-                    ',<strong>Quantity:</strong> ' . $item['product_quantity'] .
-                    ',<strong>Price:</strong> $' . $item['product_price'] .
+                echo '<li id="item-' . $item['productId'] . '"><strong>ID:</strong>' . $item['productId'] .
+                    ',<strong>Name:</strong> ' . $item['productName'] .
+                    ',<strong>Category:</strong>' . $item['productCategory'] .
+                    ',<strong>Quantity:</strong> ' . $item['productQuantity'] .
+                    ',<strong>Price:</strong> $' . $item['productPrice'] .
                     ',<strong>Inserted At:</strong> ' . $timestamp .
-                    ' <button onclick="editItem(' . $item['product_id'] . ')">Edit</button>' .
-                    ' <button onclick="deleteItem(' . $item['product_id'] . ')">Delete</button></li>';
+                    ' <button onclick="editItem(' . $item['productId'] . ')">Edit</button>' .
+                    ' <button onclick="deleteItem(' . $item['productId'] . ')">Delete</button></li>';
             }
             ?>
         </ul>
     </div>
 </div>
+<script>
+    document.getElementById('logoutForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+
+        fetch('inventoryTable/logout', {
+            method: 'POST',
+        })
+            .then(response => {
+                if (response.status === 200) {
+
+                    window.location.href = '/inventoryTable/logout';
+                } else {
+                    console.error('Logout failed.');
+                }
+            });
+    });
+</script>
 
 <script>
 
@@ -188,10 +209,10 @@
         var editedQuantity = document.getElementById('editedQuantity').value;
         var editedPrice = document.getElementById('editedPrice').value;
 
-        console.log("Edited Name:"+editedName);
-        console.log("Edited Category:" +editedCategory);
-        console.log("Edited Quantity:" +editedQuantity);
-        console.log("Edited Price:" +editedPrice);
+        console.log("Edited Name:" + editedName);
+        console.log("Edited Category:" + editedCategory);
+        console.log("Edited Quantity:" + editedQuantity);
+        console.log("Edited Price:" + editedPrice);
 
         var editeData = {
             productId: productId,

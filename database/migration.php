@@ -26,13 +26,15 @@ function create_inventory_table()
 
     $query = "CREATE TABLE inventory_table (
     id int NOT NULL AUTO_INCREMENT,
-    productID text,
+    productId text,
     productName varchar(256),
-    category int,
-    quantity int,
-    price datetime,
+    productCategory varchar(256),
+    productQuantity int,
+    productPrice int,
+    inserted_at datetime,
     primary key (id)
-    )";
+)";
+
 
     return $conn->query($query);
 }
