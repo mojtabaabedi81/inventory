@@ -2,61 +2,15 @@
 <html lang="en">
 
 <head>
+    <title>Inventory</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/Style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>Inventory</title>
-    <style>
-        h1 {
-            background-color: #1b393d;
-            color: white;
-            margin: 10px;
-            text-align: center;
-            padding: 10px 0;
-        }
+    <script src="../assets/js/main.js"></script>
 
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="number"] {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        input[type="button"] {
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 10px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-    </style>
 </head>
 
 <body>
@@ -132,9 +86,6 @@
                 }
             });
     });
-</script>
-
-<script>
 
     function addItem() {
 
