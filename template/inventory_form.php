@@ -14,6 +14,9 @@
 </head>
 
 <body>
+<form id="logoutForm" action="user/logout" method="post">
+    <button type="submit" class="btn btn-danger">Log Out</button>
+</form>
 <h1>Inventory List</h1>
 
 <div class="container">
@@ -43,9 +46,6 @@
         <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
         <button type="button" class="btn btn-success" onclick="exportInventoryToExcel()">Export to Excel</button>
     </form>
-    <form id="logoutForm" action="inventory/logout" method="post">
-        <button type="submit" class="btn btn-danger">Log Out</button>
-    </form>
 
 
     <h2>Inventory List</h2>
@@ -74,13 +74,13 @@
         event.preventDefault();
 
 
-        fetch('inventoryTable/logout', {
+        fetch('user/logout', {
             method: 'POST',
         })
             .then(response => {
                 if (response.status === 200) {
 
-                    window.location.href = '/inventoryTable/logout';
+                    window.location.href = '/user/logout';
                 } else {
                     console.error('Logout failed.');
                 }

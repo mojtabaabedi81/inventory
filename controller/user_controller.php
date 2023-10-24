@@ -47,3 +47,10 @@ function register()
     }
 
 }
+
+
+function logout ()
+{
+    session_destroy();
+    header('Location: ' . BASEURL . '/user/login');
+}

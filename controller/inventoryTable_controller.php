@@ -48,9 +48,5 @@ function delete_inventory($data)
     }
 }
 
-function logout()
-{
-    header('Location: ' . BASEURL . 'user/login');
-}
 
 
