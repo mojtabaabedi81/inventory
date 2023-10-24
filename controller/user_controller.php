@@ -6,17 +6,20 @@ function login()
         $email = post('email');
         $password = post('password');
 
-
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             if (strlen($password) >= 6) {
                 if (user_exists($email)) {
-                    $login = user_login($email, $password);
-                    if ($login) {
-                        $_SESSION['user_email'] = $email;
-                        header("Location:../inventoryTable/show");
-                        exit();
+                    if (preg_match('/^(?=.*[A-Z])(?=.*[0-9]).{6,}$/', $password)) {
+                        $login = user_login($email, $password);
+                        if ($login) {
+                            $_SESSION['user_email'] = $email;
+                            header("Location:../inventoryTable/show");
+                            exit();
+                        } else {
+                            echo "User or password is incorrect!";
+                        }
                     } else {
-                        echo "User or password is incorrect!";
+                        echo "Password must be at least 6 characters long and contain at least one uppercase letter and one number.";
                     }
                 } else {
                     echo "User not found!";
@@ -41,15 +44,19 @@ function register()
     if (post('email')) {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             if (strlen($password) >= 6) {
-                if (empty($email) || empty($password)) {
-                    echo "Please fill in all required fields.";
-                } else {
-                    if (!user_exists($email)) {
-                        create_user($email, md5($password));
-                        header("Location: ../inventoryTable/show");
+                if (preg_match('/^(?=.*[A-Z])(?=.*[0-9]).{6,}$/', $password)) {
+                    if (empty($email) || empty($password)) {
+                        echo "Please fill in all required fields.";
                     } else {
-                        echo "This account already exists.";
+                        if (!user_exists($email)) {
+                            create_user($email, md5($password));
+                            header("Location: ../inventoryTable/show");
+                        } else {
+                            echo "This account already exists.";
+                        }
                     }
+                } else {
+                    echo "Password must be at least 6 characters long and contain at least one uppercase letter and one number.";
                 }
             } else {
                 echo "Password must be at least 6 characters long.";
