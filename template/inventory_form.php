@@ -201,6 +201,7 @@
 
         $.post('/inventoryTable/delete_inventory', {"productId": productId}).done(function (response) {
             console.log(response);
+            location.reload();
         });
     }
 
