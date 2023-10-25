@@ -21,9 +21,31 @@ function post($key)
 
 function get($key)
 {
+    if (empty($_POST["$key"])){
+        return false;
+    }
+
     return prepare_data($_GET["$key"]);
 }
 
+/**
+ * @param string $text
+ * @return void
+ */
+function msg_error(string $text): void
+{
+    $_SESSION['msg_error'] = $text;
+}
+
+/**
+ * @param string $text
+ * @return void
+ */
+function msg_success(string $text): void
+{
+
+    $_SESSION['msg_success'] = $text;
+}
 
 
 function prepare_data($data)
@@ -32,7 +54,9 @@ function prepare_data($data)
 }
 function view($view_name , $data = null)
 {
-    include __DIR__ ."/../template/$view_name" .".php";
+
+    include __DIR__ . "/../template/alertTemplate.php";
+    include __DIR__ . "/../template/$view_name" .".php";
 }
 function validate_password($password): bool
 {

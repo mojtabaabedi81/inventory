@@ -1,9 +1,12 @@
 <?php
 function login()
 {
+
     if (post('loginRequest')) {
+
         $email = post('email');
         $password = post('password');
+
         if (validate_email($email)) {
             if (validate_password($password)) {
                 if (user_exists($email)) {
@@ -12,15 +15,21 @@ function login()
                         $_SESSION['user_email'] = $email;
                         header("Location:../inventoryTable/show");
                         exit();
-                    } else
-                        view("loginForm");
+                    } else {
+                        msg_error('email or password wrong !');
+                    }
+                } else {
+                    msg_error('user not found !');
                 }
-                echo "n";
+            } else {
+                msg_error('password not strong !');
             }
+        } else {
+            msg_error('email not valid !');
         }
-        echo "b";
-    } else
-        view('loginForm');
+    }
+
+    view('loginForm');
 }
 
 function register()
@@ -30,7 +39,7 @@ function register()
         $email = post('email');
         $password = post('password');
         if (!validate_email($email)) {
-            //error
+
             if (!validate_password($password)) {
                 //error
             }
