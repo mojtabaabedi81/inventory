@@ -1,7 +1,6 @@
 <?php
 function login()
 {
-
     if (post('loginRequest')) {
 
         $email = post('email');
@@ -13,6 +12,7 @@ function login()
                     $login = user_login($email, $password);
                     if ($login) {
                         $_SESSION['user_email'] = $email;
+                        msg_success('welcome to your panel  '. $email);
                         header("Location:../inventoryTable/show");
                         exit();
                     } else {
@@ -34,29 +34,36 @@ function login()
 
 function register()
 {
-
     if (post('email') && post('password')) {
         $email = post('email');
         $password = post('password');
         if (!validate_email($email)) {
-
-            if (!validate_password($password)) {
-                //error
-            }
+            msg_error("Email is not valid");
+            header('Location: ' . BASEURL);
+            exit();
+        }
+        if (!validate_password($password)) {
+            msg_error("Password is not valid");
+            header('Location: ' . BASEURL);
+            exit();
         }
         if (!user_exists($email)) {
             create_user($email, md5($password));
-            header("Location: ../inventoryTable/show");
-            exit();
+            $login = user_login($email, $password);
+            if ($login) {
+                $_SESSION['user_email'] = $email;
+                msg_success('welcome '. $email);
+                header("Location:../inventoryTable/show");
+                exit();
+            }
         } else {
             header('Location: ' . BASEURL);
             msg_error("This account already exists.");
         }
-    }else
-        header('Location: ' .BASEURL);
-    msg_error("Some thing went wrong !");
+    } else
+        header('Location: ' . BASEURL);
+        msg_error("fill all input");
 }
-
 
 function logout()
 {
