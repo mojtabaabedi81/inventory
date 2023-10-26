@@ -7,7 +7,7 @@ echo "
   {$_SESSION['msg_error']}
 </div>
 ";
-
+unset($_SESSION['msg_error']);
 }
 
 if (isset($_SESSION['msg_success'])) {
@@ -17,8 +17,6 @@ echo "
   {$_SESSION['msg_success']}
 </div>
 ";
-
+unset($_SESSION['msg_success']);
 }
-
-session_destroy();
 
