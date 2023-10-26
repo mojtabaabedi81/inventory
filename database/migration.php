@@ -26,12 +26,12 @@ function create_inventory_table()
 
     $query = "CREATE TABLE inventory_table (
     id int NOT NULL AUTO_INCREMENT,
-    productId int,
-    productName varchar(256),
-    productCategory varchar(256),
-    productQuantity int,
-    productPrice int,
-    inserted_at datetime,
+    product_no int,
+    product_name varchar(256),
+    product_category varchar(256),
+    product_quantity int,
+    product_price int,
+    created_at datetime,
     primary key (id)
 )";
 

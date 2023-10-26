@@ -1,16 +1,16 @@
 <?php
 
-function create_product($productName, $productId, $productCategory, $productQuantity, $productPrice): bool
+function create_product($product_name, $product_no, $product_category, $product_quantity, $product_price): bool
 {
     global $conn;
 
-    $stmt = $conn->prepare("INSERT INTO inventory_table (productId, productName, productCategory , productQuantity , productPrice ,inserted_at) VALUES (:productId, :productName, :productCategory, :productQuantity, :productPrice,NOW())");
+    $stmt = $conn->prepare("INSERT INTO inventory_table (product_no, product_name, product_category , product_quantity , product_price ,created_at) VALUES (:product_no, :product_name, :product_category, :product_quantity, :product_price,NOW())");
 
-    $stmt->bindParam(':productId', $productId);
-    $stmt->bindParam(':productName', $productName);
-    $stmt->bindParam(':productCategory', $productCategory);
-    $stmt->bindParam(':productQuantity', $productQuantity);
-    $stmt->bindParam(':productPrice', $productPrice);
+    $stmt->bindParam(':product_no', $product_no);
+    $stmt->bindParam(':product_name', $product_name);
+    $stmt->bindParam(':product_category', $product_category);
+    $stmt->bindParam(':product_quantity', $product_quantity);
+    $stmt->bindParam(':product_price', $product_price);
 
 
     return $stmt->execute();
@@ -35,25 +35,25 @@ function get_by_id_product($id)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function delete_by_id_product($productId): bool
+function delete_by_id_product($product_no): bool
 {
     global $conn;
-    $query = "DELETE FROM inventory_table WHERE productId = :productId";
+    $query = "DELETE FROM inventory_table WHERE product_no = :product_no";
     $stmt = $conn->prepare($query);
 
-    return $stmt->execute(['productId' => $productId]);
+    return $stmt->execute(['product_no' => $product_no]);
 }
 
-function edit_product($productId, $productName, $productCategory, $productQuantity, $productPrice): bool
+function edit_product($product_no, $product_name, $product_category, $product_quantity, $product_price): bool
 {
     global $conn;
-    $stmt = $conn->prepare("UPDATE inventory_table SET (productId, productName, productCategory , productQuantity , productPrice ,inserted_at) 
-                       VALUES (:productId, :productName, :productCategory, :productQuantity, :productPrice,NOW())");
-    $stmt->bindParam(':productId', $productId);
-    $stmt->bindParam(':productName', $productName);
-    $stmt->bindParam(':productCategory', $productCategory);
-    $stmt->bindParam(':productQuantity', $productQuantity);
-    $stmt->bindParam(':productPrice', $productPrice);
+    $stmt = $conn->prepare("UPDATE inventory_table SET (product_no, product_name, product_category , product_quantity , product_price ,created_at) 
+                       VALUES (:product_no, :product_name, :product_category, :product_quantity, :product_price,NOW())");
+    $stmt->bindParam(':product_no', $product_no);
+    $stmt->bindParam(':product_name', $product_name);
+    $stmt->bindParam(':product_category', $product_category);
+    $stmt->bindParam(':product_quantity', $product_quantity);
+    $stmt->bindParam(':product_price', $product_price);
 
     return $stmt->execute();
 

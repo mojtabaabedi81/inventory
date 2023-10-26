@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<form id="logoutForm" action="user/logout" method="post">
+<form id="logoutForm" action="../user/logout" method="post">
     <button type="submit" class="btn btn-danger">Log Out</button>
 </form>
 <h1>Inventory List</h1>
@@ -22,24 +22,24 @@
 
     <form id="inventoryForm" action="/inventoryTable/add_product" method="post">
         <div class="form-group">
-            <label for="productId">Product ID:</label>
-            <input type="text" id="productId" name="productId" class="form-control">
+            <label for="product_no">Product No:</label>
+            <input type="text" id="product_no" name="product_no" class="form-control">
         </div>
         <div class="form-group">
-            <label for="productName">Product Name:</label>
-            <input type="text" id="productName" name="productName" class="form-control">
+            <label for="product_name">Product Name:</label>
+            <input type="text" id="product_name" name="product_name" class="form-control">
         </div>
         <div class="form-group">
-            <label for="productCategory">Category:</label>
-            <input type="text" id="productCategory" name="productCategory" class="form-control">
+            <label for="product_category">Category:</label>
+            <input type="text" id="product_category" name="product_category" class="form-control">
         </div>
         <div class="form-group">
-            <label for="productQuantity">Quantity:</label>
-            <input type="number" id="productQuantity" name="productQuantity" class="form-control">
+            <label for="product_quantity">Quantity:</label>
+            <input type="number" id="product_quantity" name="product_quantity" class="form-control">
         </div>
         <div class="form-group">
-            <label for="productPrice">Price:</label>
-            <input type="number" step="0.01" id="productPrice" name="productPrice" class="form-control">
+            <label for="product_price">Price:</label>
+            <input type="number" step="0.01" id="product_price" name="product_price" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Add Item</button>
         <button type="reset" class="btn btn-secondary">Clear Form</button>
@@ -53,64 +53,38 @@
         <ul id="inventoryList">
             <?php
             foreach ($data as $item) {
-                $timestamp = date('Y-m-d H:i:s', strtotime($item['inserted_at']));
-                echo '<li id="item-' . $item['productId'] . '"><strong>ID:</strong>' . $item['productId'] .
-                    ',<strong>Name:</strong> ' . $item['productName'] .
-                    ',<strong>Category:</strong>' . $item['productCategory'] .
-                    ',<strong>Quantity:</strong> ' . $item['productQuantity'] .
-                    ',<strong>Price:</strong> $' . $item['productPrice'] .
+
+                $timestamp = date('Y-m-d H:i:s', strtotime($item['created_at']));
+                echo '<li id="item-' . $item['product_no'] . '"><strong>ID:</strong>' . $item['product_no'] .
+                    ',<strong>Name:</strong> ' . $item['product_name'] .
+                    ',<strong>Category:</strong>' . $item['product_category'] .
+                    ',<strong>Quantity:</strong> ' . $item['product_quantity'] .
+                    ',<strong>Price:</strong> $' . $item['product_price'] .
                     ',<strong>Inserted At:</strong> ' . $timestamp .
-                    ' <button onclick="editItem(' . $item['productId'] . ')">Edit</button>' .
-                    ' <button onclick="deleteItem(' . $item['productId'] . ')">Delete</button></li>';
+                    ' <button onclick="editItem(' . $item['id'] . ')">Edit</button>' .
+                    ' <button onclick="deleteItem(' . $item['id'] . ')">Delete</button></li>';
             }
             ?>
         </ul>
     </div>
 </div>
 <script>
-    document.getElementById('logoutForm').addEventListener('submit', function (event) {
-        event.preventDefault();
 
-
-        fetch('user/logout', {
-            method: 'POST',
-        })
-            .then(response => {
-                if (response.status === 200) {
-
-                    window.location.href = '/user/logout';
-                } else {
-                    console.error('Logout failed.');
-                }
-            });
-    });
-
-
-    function editItem(productId) {
+    function editItem(product_no) {
 
         $.post('/inventoryTable/edit_item',
-            {"productId": productId}).done(function (response) {
+            {"product_no": product_no}).done(function (response) {
             console.log(response);
             location.reload();
         });
     }
 
 
-    function deleteItem(productId) {
-        fetch('inventoryTable/delete_product', {
-            method: 'POST',
-            body: productId,
-        }).then(response => {
-            if (response.status === 200) {
-                console.log(response)
-            } else {
-                console.log(response);
-            }
+    function deleteItem(product_no) {
+        $.post('/inventoryTable/delete_product', {"product_no": product_no}).done(function (response) {
+            console.log(response);
+            location.reload();
         });
-        // $.post('/inventoryTable/delete_product', {"productId": productId}).done(function (response) {
-        //     console.log(response);
-        //     location.reload();
-        // });
     }
 
 
@@ -140,6 +114,31 @@
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+
+
+
+
+    //bootstrap
+
+
+    const exampleModal = document.getElementById('exampleModal')
+    if (exampleModal) {
+        exampleModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            const recipient = button.getAttribute('data-bs-whatever')
+            // If necessary, you could initiate an Ajax request here
+            // and then do the updating in a callback.
+
+            // Update the modal's content.
+            const modalTitle = exampleModal.querySelector('.modal-title')
+            const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+            modalTitle.textContent = `New message to ${recipient}`
+            modalBodyInput.value = recipient
+        })
     }
 </script>
 
