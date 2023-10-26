@@ -1,6 +1,6 @@
 <?php
 
-function create_user($email,$password)
+function create_user($email, $password)
 {
     global $conn;
     $sql = "INSERT INTO users ( password, email) VALUES (:password , :email)";
@@ -39,7 +39,7 @@ function user_exists($email)
     return $stmt->rowcount();
 }
 
-function add_sql($productName ,$productId,$productCategory,$productQuantity,$productPrice)
+function add_sql($productName, $productId, $productCategory, $productQuantity, $productPrice)
 {
     global $conn;
 
@@ -58,15 +58,17 @@ function add_sql($productName ,$productId,$productCategory,$productQuantity,$pro
 
 }
 
-function fetch_sql ()
+function fetch_sql()
 {
+
     global $conn;
     global $stmt;
 
     $query = "SELECT * FROM inventory_table";
     $stmt = $conn->query($query);
 }
-function delete_sql ($productId)
+
+function delete_sql($productId)
 {
     global $conn;
     global $stmt;
