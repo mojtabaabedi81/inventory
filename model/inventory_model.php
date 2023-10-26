@@ -44,16 +44,24 @@ function delete_by_id_product($id): bool
     return $stmt->execute(['id' => $id]);
 }
 
-function edit_product($product_no, $product_name, $product_category, $product_quantity, $product_price): bool
+function edit_product($product_no, $product_name, $product_category, $product_quantity, $product_price, $id): bool
 {
     global $conn;
-    $stmt = $conn->prepare("UPDATE inventory_table SET (product_no, product_name, product_category , product_quantity , product_price ,created_at) 
-                       VALUES (:product_no, :product_name, :product_category, :product_quantity, :product_price,NOW())");
+    $sql = "UPDATE inventory_table SET product_no = :product_no,
+                           product_name = :product_name,
+                           product_category = :product_category,
+                           product_quantity = :product_quantity,
+                           product_price = :product_price,
+                           created_at = Now()
+                           WHERE id = :id";
+
+    $stmt = $conn->prepare($sql);
     $stmt->bindParam(':product_no', $product_no);
     $stmt->bindParam(':product_name', $product_name);
     $stmt->bindParam(':product_category', $product_category);
     $stmt->bindParam(':product_quantity', $product_quantity);
     $stmt->bindParam(':product_price', $product_price);
+    $stmt->bindParam(':id', $id);
 
     return $stmt->execute();
 

@@ -59,14 +59,14 @@
             <?php
             foreach ($data as $item) {
                 echo '<tr> 
-                        <th>' . $item['product_no'] . '</th>
+                        <td>' . $item['product_no'] . '</td>
                         <td>' . $item['product_name'] . '</td>
                         <td>' . $item['product_category'] . '</td>
                         <td>' . $item['product_quantity'] . '</td>
                         <td>' . $item['product_price'] . '</td>
                         <td>' . $item['created_at'] . '</td>
                         <td>
-                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" class="btn btn-warning">Edit</button>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-id="'.$item['id'].'" data-bs-name="'.$item['product_name'].'" class="btn btn-warning">Edit</button>
                             <button class="btn btn-danger" onclick="deleteItem(' . $item['id'] . ')">Delete</button>
                         </td>
                         </tr>';
@@ -83,36 +83,41 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">edit item</h1>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="post" action="/inventoryTable/edit_item">
+                    <input name="id" id="sendId" type="hidden" value="">
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Recipient:</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label">Product Number:</label>
+                        <input name="product_no" type="number" class="form-control" id="Product-number">
                     </div>
                     <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>
+                        <input name="product_name" type="text" class="form-control" id="Product-name">
                     </div>
-                </form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Category:</label>
+                        <input name="product_category" type="text" class="form-control" id="category">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Quantity:</label>
+                        <input name="product_quantity" type="number" class="form-control" id="quantity">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Price:</label>
+                        <input name="product_price" type="number" class="form-control" id="Price">
+                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" onclick="editItem()" class="btn btn-primary">Send message</button>
+                <button type="submit" class="btn btn-success">Save</button>
             </div>
+                </form>
         </div>
     </div>
 </div>
 <script>
-
-    function editItem(id) {
-
-        $.post('/inventoryTable/edit_product', {"id": id}).done(function (response) {
-            // location.reload();
-        });
-    }
-
 
     function deleteItem(id) {
         $.post('/inventoryTable/delete_product', {"id": id}).done(function (response) {
@@ -156,23 +161,22 @@
 
     //bootstrap modal
 
-
     const exampleModal = document.getElementById('exampleModal')
     if (exampleModal) {
         exampleModal.addEventListener('show.bs.modal', event => {
             // Button that triggered the modal
             const button = event.relatedTarget
             // Extract info from data-bs-* attributes
-            const recipient = button.getAttribute('data-bs-whatever')
+            const ProductID = button.getAttribute('data-bs-id')
+            const ProductName = button.getAttribute('data-bs-name')
             // If necessary, you could initiate an Ajax request here
             // and then do the updating in a callback.
-
             // Update the modal's content.
             const modalTitle = exampleModal.querySelector('.modal-title')
-            const modalBodyInput = exampleModal.querySelector('.modal-body input')
+            const modalBodyInput = exampleModal.querySelector('#sendId')
 
-            modalTitle.textContent = `New message to ${recipient}`
-            modalBodyInput.value = recipient
+            modalTitle.textContent = `Edit Product ${ProductName}`
+            modalBodyInput.value = ProductID
         })
     }
 </script>

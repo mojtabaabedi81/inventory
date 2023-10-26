@@ -43,8 +43,9 @@ function edit_item()
         $product_category = post('product_category');
         $product_quantity = post('product_quantity');
         $product_price = post('product_price');
+        $id = post('id');
 
-        edit_product($product_name, $product_no, $product_category, $product_quantity, $product_price);
+        edit_product($product_name, $product_no, $product_category, $product_quantity, $product_price, $id);
 
         header("Location:../inventoryTable/show");
         exit();
