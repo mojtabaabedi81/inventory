@@ -6,6 +6,7 @@ require_once __DIR__ . "/helper/helper.php";
 require_once __DIR__ . "/middleware/auth_middleware.php";
 require_once __DIR__ . "/database/database.php";
 require_once __DIR__ . "/model/user_model.php";
+require_once __DIR__ . "/model/inventory_model.php";
 require_once __DIR__ . "/database/migration.php";
 
 createTableIfNotExist();
