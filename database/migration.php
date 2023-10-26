@@ -26,7 +26,7 @@ function create_inventory_table()
 
     $query = "CREATE TABLE inventory_table (
     id int NOT NULL AUTO_INCREMENT,
-    productId text,
+    productId int,
     productName varchar(256),
     productCategory varchar(256),
     productQuantity int,
