@@ -3,86 +3,119 @@
 
 <head>
     <title>Inventory</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../assets/css/Style.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.js"></script>
+    <script src="../assets/js/jquery-3.7.1.min.js"></script>
 </head>
 
 <body>
 <form id="logoutForm" action="../user/logout" method="post">
     <button type="submit" class="btn btn-danger">Log Out</button>
 </form>
-<h1>Inventory List</h1>
-
-
-<div class="container">
-
-    <form id="inventoryForm" action="/inventoryTable/add_product" method="post">
-        <div class="form-group">
-            <label for="product_no">Product No:</label>
-            <input type="text" id="product_no" name="product_no" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="product_name">Product Name:</label>
-            <input type="text" id="product_name" name="product_name" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="product_category">Category:</label>
-            <input type="text" id="product_category" name="product_category" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="product_quantity">Quantity:</label>
-            <input type="number" id="product_quantity" name="product_quantity" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="product_price">Price:</label>
-            <input type="number" step="0.01" id="product_price" name="product_price" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary">Add Item</button>
-        <button type="reset" class="btn btn-secondary">Clear Form</button>
-        <button type="button" class="btn btn-success" onclick="exportInventoryToExcel()">Export to Excel</button>
-    </form>
-
-
-    <h2>Inventory List</h2>
-    <div class="container">
-        <div class="my-row"
-        <ul id="inventoryList">
+<h1>Inventory</h1>
+<div class="modal-body row">
+    <div class="col-md-4">
+        <form class="form-control" id="inventoryForm" action="/inventoryTable/add_product" method="post">
+            <div class="form-group">
+                <label for="productId">Product Number:</label>
+                <input type="number" id="product_no" name="product_no" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="productName">Product Name:</label>
+                <input type="text" id="product_name" name="product_name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="productCategory">Category:</label>
+                <input type="text" id="product_category" name="product_category" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="productQuantity">Quantity:</label>
+                <input type="number" id="product_quantity" name="product_quantity" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="productPrice">Price:</label>
+                <input type="number" step="0.01" id="product_price" name="product_price" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Item</button>
+            <button type="reset" class="btn btn-secondary">Clear Form</button>
+            <button type="button" class="btn btn-success" onclick="exportInventoryToExcel()">Export to Excel</button>
+        </form>
+    </div>
+    <div class="col-md-8">
+        <table class="table table-light table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Product Number</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Operation</th>
+            </tr>
+            </thead>
+            <tbody>
             <?php
             foreach ($data as $item) {
-
-                $timestamp = date('Y-m-d H:i:s', strtotime($item['created_at']));
-                echo '<li id="item-' . $item['product_no'] . '"><strong>ID:</strong>' . $item['product_no'] .
-                    ',<strong>Name:</strong> ' . $item['product_name'] .
-                    ',<strong>Category:</strong>' . $item['product_category'] .
-                    ',<strong>Quantity:</strong> ' . $item['product_quantity'] .
-                    ',<strong>Price:</strong> $' . $item['product_price'] .
-                    ',<strong>Inserted At:</strong> ' . $timestamp .
-                    ' <button onclick="editItem(' . $item['id'] . ')">Edit</button>' .
-                    ' <button onclick="deleteItem(' . $item['id'] . ')">Delete</button></li>';
+                echo '<tr> 
+                        <th>' . $item['product_no'] . '</th>
+                        <td>' . $item['product_name'] . '</td>
+                        <td>' . $item['product_category'] . '</td>
+                        <td>' . $item['product_quantity'] . '</td>
+                        <td>' . $item['product_price'] . '</td>
+                        <td>' . $item['created_at'] . '</td>
+                        <td>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" class="btn btn-warning">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteItem(' . $item['id'] . ')">Delete</button>
+                        </td>
+                        </tr>';
             }
             ?>
-        </ul>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Recipient:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="editItem()" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
     </div>
 </div>
 <script>
 
-    function editItem(product_no) {
+    function editItem(id) {
 
-        $.post('/inventoryTable/edit_item',
-            {"product_no": product_no}).done(function (response) {
-            console.log(response);
-            location.reload();
+        $.post('/inventoryTable/edit_product', {"id": id}).done(function (response) {
+            // location.reload();
         });
     }
 
 
-    function deleteItem(product_no) {
-        $.post('/inventoryTable/delete_product', {"product_no": product_no}).done(function (response) {
-            console.log(response);
+    function deleteItem(id) {
+        $.post('/inventoryTable/delete_product', {"id": id}).done(function (response) {
             location.reload();
         });
     }
@@ -116,10 +149,12 @@
         document.body.removeChild(link);
     }
 
+    function edit(data) {
+
+    }
 
 
-
-    //bootstrap
+    //bootstrap modal
 
 
     const exampleModal = document.getElementById('exampleModal')

@@ -35,13 +35,13 @@ function get_by_id_product($id)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function delete_by_id_product($product_no): bool
+function delete_by_id_product($id): bool
 {
     global $conn;
-    $query = "DELETE FROM inventory_table WHERE product_no = :product_no";
+    $query = "DELETE FROM inventory_table WHERE id = :id";
     $stmt = $conn->prepare($query);
 
-    return $stmt->execute(['product_no' => $product_no]);
+    return $stmt->execute(['id' => $id]);
 }
 
 function edit_product($product_no, $product_name, $product_category, $product_quantity, $product_price): bool

@@ -23,11 +23,11 @@ function add_product()
     }
 }
 
-function delete_product($data)
+function delete_product()
 {
-    $product_no = post('product_no');
+    $product_id = post('id');
 
-    if (delete_by_id_product($product_no)) {
+    if (delete_by_id_product($product_id)) {
         msg_success('Item deleted successfully');
     } else {
         msg_error('Item deletion failed');
