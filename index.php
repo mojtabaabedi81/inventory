@@ -3,7 +3,7 @@ session_start();
 
 require_once __DIR__ . "/config/config.php";
 require_once __DIR__ . "/helper/helper.php";
-require __DIR__ . "/middleware/auth_middleware.php";
+require_once __DIR__ . "/middleware/auth_middleware.php";
 require_once __DIR__ . "/database/database.php";
 require_once __DIR__ . "/model/user_model.php";
 require_once __DIR__ . "/database/migration.php";
@@ -26,7 +26,6 @@ if (isset($_SERVER['REQUEST_URI'])) {
     $file = __DIR__ . "/controller/{$controller}_controller.php";
     if (file_exists($file)) {
         require $file;
-//        dd($method);
         $method($_REQUEST);
     } else {
         die('something went wrong');
