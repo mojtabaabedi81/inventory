@@ -2,10 +2,11 @@
 
 function show()
 {
-    view("inventory_form");
+    $data = get_all_product();
+    view("inventory_form", $data);
 }
 
-function add_inventory()
+function add_product()
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -15,38 +16,38 @@ function add_inventory()
         $productQuantity = post('productQuantity');
         $productPrice = post('productPrice');
 
-        add_sql($productName, $productId, $productCategory, $productQuantity, $productPrice);
+        create_product($productName, $productId, $productCategory, $productQuantity, $productPrice);
 
         header("Location:../inventoryTable/show");
-
+        exit();
     }
 }
 
-function fetch_from_database()
+function delete_product($data)
 {
-    global $conn;
-
-    fetch_sql();
-    global $stmt;
-    $inventoryData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    return $inventoryData;
-}
-
-function delete_inventory($data)
-{
-    global $conn;
-    global $stmt;
     $productId = post('productId');
-    delete_sql($productId);
 
-
-    if ($stmt->execute(['productId' => $productId])) {
-        echo json_encode(array('message' => 'Item deleted successfully'));
+    if (delete_by_id_product($productId)) {
+        msg_success('Item deleted successfully');
     } else {
-        echo json_encode(array('message' => 'Item deletion failed'));
+        msg_error('Item deletion failed');
     }
 }
 
+function edit_item()
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+        $productName = post('productName');
+        $productId = post('productId');
+        $productCategory = post('productCategory');
+        $productQuantity = post('productQuantity');
+        $productPrice = post('productPrice');
+
+        edit_product($productName, $productId, $productCategory, $productQuantity, $productPrice);
+
+        header("Location:../inventoryTable/show");
+        exit();
+    }
+}
 

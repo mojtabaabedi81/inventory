@@ -9,8 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="../assets/js/main.js"></script>
-
 </head>
 
 <body>
@@ -19,9 +17,10 @@
 </form>
 <h1>Inventory List</h1>
 
+
 <div class="container">
 
-    <form id="inventoryForm" action="/inventoryTable/add_inventory" method="post">
+    <form id="inventoryForm" action="/inventoryTable/add_product" method="post">
         <div class="form-group">
             <label for="productId">Product ID:</label>
             <input type="text" id="productId" name="productId" class="form-control">
@@ -43,18 +42,17 @@
             <input type="number" step="0.01" id="productPrice" name="productPrice" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Add Item</button>
-        <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+        <button type="reset" class="btn btn-secondary">Clear Form</button>
         <button type="button" class="btn btn-success" onclick="exportInventoryToExcel()">Export to Excel</button>
     </form>
 
 
     <h2>Inventory List</h2>
     <div class="container">
+        <div class="my-row"
         <ul id="inventoryList">
             <?php
-            require_once __DIR__ . "/../controller/inventoryTable_controller.php";
-            $inventoryData = fetch_from_database();
-            foreach ($inventoryData as $item) {
+            foreach ($data as $item) {
                 $timestamp = date('Y-m-d H:i:s', strtotime($item['inserted_at']));
                 echo '<li id="item-' . $item['productId'] . '"><strong>ID:</strong>' . $item['productId'] .
                     ',<strong>Name:</strong> ' . $item['productName'] .
@@ -87,122 +85,32 @@
             });
     });
 
-    function addItem() {
-
-        var productId = document.getElementById('productId').value;
-        var productName = document.getElementById('productName').value;
-        var productCategory = document.getElementById('productCategory').value;
-        var productQuantity = document.getElementById('productQuantity').value;
-        var productPrice = document.getElementById('productPrice').value;
-
-
-        var listItem = document.createElement('li');
-        listItem.innerHTML =
-            '<strong>ID:</strong> ' + productId +
-            ', <strong>Name:</strong> ' + productName +
-            ', <strong>Category:</strong> ' + productCategory +
-            ', <strong>Quantity:</strong> ' + productQuantity +
-            ', <strong>Price:</strong> $' + productPrice +
-            ' <button onclick="editItem(' + productId + ')">Edit</button>' +
-            ' <button onclick="deleteItem(' + productId + ')">Delete</button>';
-
-
-        document.getElementById('inventoryList').appendChild(listItem);
-
-
-        clearForm();
-    }
-
-
-    function clearForm() {
-        document.getElementById('productId').value = '';
-        document.getElementById('productName').value = '';
-        document.getElementById('productCategory').value = '';
-        document.getElementById('productQuantity').value = '';
-        document.getElementById('productPrice').value = '';
-    }
-
 
     function editItem(productId) {
-        console.log("Edit button clicked for product for ID:" + productId);
 
-        var inventoryList = document.getElementById('inventoryList');
-        var items = inventoryList.getElementsByTagName('li');
-
-        for (var i = 0; i < items.length; i++) {
-            var item = items[i];
-            var itemId = item.getElementsByTagName('strong')[0].textContent.split(':')[1].trim();
-
-            if (itemId === productId) {
-                var itemData = item.textContent.split(', ');
-                var editedName = itemData[1].split(':')[1].trim();
-                var editedCategory = itemData[2].split(':')[1].trim();
-                var editedQuantity = itemData[3].split(':')[1].trim();
-                var editedPrice = itemData[4].split(':')[1].trim();
-
-                item.innerHTML =
-                    '<strong>ID:</strong> ' + productId +
-                    ', <strong>Name:</strong> <input type="text" id="editedName" value="' + editedName + '">' +
-                    ', <strong>Category:</strong> <input type="text" id="editedCategory" value="' + editedCategory + '">' +
-                    ', <strong>Quantity:</strong> <input type="number" id="editedQuantity" value="' + editedQuantity + '">' +
-                    ', <strong>Price:</strong> <input type="number" step="0.01" id="editedPrice" value="' + editedPrice + '">' +
-                    ' <button onclick="saveEdit(' + productId + ')">Save</button>' +
-                    ' <button onclick="deleteItem(' + productId + ')">Delete</button>';
-                break;
-            }
-        }
-    }
-
-
-    function saveEdit(productId) {
-        var editedName = document.getElementById('editedName').value;
-        var editedCategory = document.getElementById('editedCategory').value;
-        var editedQuantity = document.getElementById('editedQuantity').value;
-        var editedPrice = document.getElementById('editedPrice').value;
-
-        console.log("Edited Name:" + editedName);
-        console.log("Edited Category:" + editedCategory);
-        console.log("Edited Quantity:" + editedQuantity);
-        console.log("Edited Price:" + editedPrice);
-
-        var editeData = {
-            productId: productId,
-            editedName: editedName,
-            editedCategory: editedCategory,
-            editedQuantity: editedQuantity,
-            editedPrice: editedPrice
-        };
-
-        $.post('/inventoryTable/update_inventory', editeData).done(function (response) {
-            console.log(response);
-        });
-
-        var inventoryList = document.getElementById('inventoryList');
-        var items = inventoryList.getElementsByTagName('li');
-        for (var i = 0; i < items.length; i++) {
-            var item = items[i];
-            var itemId = item.getElementsByTagName('strong')[0].textContent.split(':')[1].trim();
-            if (itemId === productId) {
-                item.innerHTML =
-                    '<strong>ID:</strong> ' + productId +
-                    ', <strong>Name:</strong> ' + editedName +
-                    ', <strong>Category:</strong> ' + editedCategory +
-                    ', <strong>Quantity:</strong> ' + editedQuantity +
-                    ', <strong>Price:</strong> $' + editedPrice +
-                    ' <button onclick="editItem(' + productId + ')">Edit</button>' +
-                    ' <button onclick="deleteItem(' + productId + ')">Delete</button>';
-                break;
-            }
-        }
-    }
-
-    function deleteItem(productId) {
-
-
-        $.post('/inventoryTable/delete_inventory', {"productId": productId}).done(function (response) {
+        $.post('/inventoryTable/edit_item',
+            {"productId": productId}).done(function (response) {
             console.log(response);
             location.reload();
         });
+    }
+
+
+    function deleteItem(productId) {
+        fetch('inventoryTable/delete_product', {
+            method: 'POST',
+            body: productId,
+        }).then(response => {
+            if (response.status === 200) {
+                console.log(response)
+            } else {
+                console.log(response);
+            }
+        });
+        // $.post('/inventoryTable/delete_product', {"productId": productId}).done(function (response) {
+        //     console.log(response);
+        //     location.reload();
+        // });
     }
 
 
