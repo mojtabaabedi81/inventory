@@ -190,3 +190,7 @@ li {
     background: #ecdee4;
     text-align: center;
 }
+
+.email-signup {
+    display: none;
+}
