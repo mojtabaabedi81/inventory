@@ -49,9 +49,12 @@ function register()
             header("Location: ../inventoryTable/show");
             exit();
         } else {
-            echo "This account already exists.";
+            header('Location: ' . BASEURL);
+            msg_error("This account already exists.");
         }
-    }
+    }else
+        header('Location: ' .BASEURL);
+    msg_error("Some thing went wrong !");
 }
 
 
