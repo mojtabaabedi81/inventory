@@ -1,11 +1,12 @@
 <?php
 
-function create_product($product_name, $product_no, $product_category, $product_quantity, $product_price): bool
+function create_product($user_id,$product_name, $product_no, $product_category, $product_quantity, $product_price): bool
 {
     global $conn;
 
-    $stmt = $conn->prepare("INSERT INTO inventory_table (product_no, product_name, product_category , product_quantity , product_price ,created_at) VALUES (:product_no, :product_name, :product_category, :product_quantity, :product_price,NOW())");
+    $stmt = $conn->prepare("INSERT INTO inventory_table (user_id, product_no, product_name, product_category , product_quantity , product_price ,created_at) VALUES (:user_id,:product_no, :product_name, :product_category, :product_quantity, :product_price,NOW())");
 
+    $stmt->bindParam(':user_id', $user_id);
     $stmt->bindParam(':product_no', $product_no);
     $stmt->bindParam(':product_name', $product_name);
     $stmt->bindParam(':product_category', $product_category);
@@ -16,10 +17,10 @@ function create_product($product_name, $product_no, $product_category, $product_
     return $stmt->execute();
 }
 
-function get_all_product()
+function get_all_product($user_id)
 {
     global $conn;
-    $query = "SELECT * FROM inventory_table";
+    $query = "SELECT * FROM inventory_table where user_id = $user_id ";
     $stmt = $conn->query($query);
 
 
