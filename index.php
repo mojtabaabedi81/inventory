@@ -9,6 +9,12 @@ require_once __DIR__ . "/model/user_model.php";
 require_once __DIR__ . "/model/inventory_model.php";
 require_once __DIR__ . "/database/migration.php";
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use PhpOffice\PhpSpreadsheet\Writer\Csv;
+require __DIR__ . "/vendor/autoload.php";
+
 createTableIfNotExist();
 
 
