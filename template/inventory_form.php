@@ -39,7 +39,10 @@
             </div>
             <button type="submit" class="btn btn-primary">Add Item</button>
             <button type="reset" class="btn btn-secondary">Clear Form</button>
-            <button type="button" class="btn btn-success" onclick="exportInventoryToExcel()">Export to Excel</button>
+        </form>
+
+        <form action="/inventoryTable/excel_export" method="post" name="export_to_excel">
+            <button type="submit" name="export_excel_btn" class="btn btn-primary">Export</button>
         </form>
     </div>
     <div class="col-md-8">
@@ -66,7 +69,7 @@
                         <td>' . $item['product_price'] . '</td>
                         <td>' . $item['created_at'] . '</td>
                         <td>
-                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-id="'.$item['id'].'" data-bs-name="'.$item['product_name'].'" class="btn btn-warning">Edit</button>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-id="' . $item['id'] . '" data-bs-name="' . $item['product_name'] . '" class="btn btn-warning">Edit</button>
                             <button class="btn btn-danger" onclick="deleteItem(' . $item['id'] . ')">Delete</button>
                         </td>
                         </tr>';
@@ -113,7 +116,7 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-success">Save</button>
             </div>
-                </form>
+            </form>
         </div>
     </div>
 </div>
@@ -125,34 +128,6 @@
         });
     }
 
-
-    function exportInventoryToExcel() {
-        var data = [];
-
-        var inventoryListItems = document.querySelectorAll('#inventoryList li');
-
-
-        data.push(["Product ID", "Product Name", "Category", "Quantity", "Price"]);
-
-
-        inventoryListItems.forEach((item) => {
-            var itemData = item.textContent.split(', ');
-            data.push(itemData);
-        });
-
-
-        var csvContent = "data:text/csv;charset=utf-8," + data.map(e => e.join(",")).join("\n");
-        var encodedUri = encodeURI(csvContent);
-
-
-        var link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "inventory.csv");
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
 
     function edit(data) {
 
