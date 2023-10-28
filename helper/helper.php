@@ -73,3 +73,14 @@ function validate_email($email)
 {
    return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
+
+function required($array, $redirect)
+{
+    foreach ($array as $arr){
+        if (empty($arr)){
+            msg_error('fill all the required inputs');
+            header('Location:'. $redirect);
+            exit();
+        }
+    }
+}
