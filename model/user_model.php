@@ -38,3 +38,17 @@ function user_exists($email)
 
     return $stmt->rowcount();
 }
+
+
+function get_user_id($email)
+{
+    global $conn;
+    $email = $_SESSION['user_email'];
+    $query = "SELECT id FROM users WHERE email = :email";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([
+        'email' => $email
+    ]);
+    return $stmt->fetch();
+
+}
