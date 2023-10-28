@@ -79,3 +79,19 @@ function edit_item()
     }
 }
 
+function excel_export()
+{
+    $email = $_SESSION['user_email'];
+    $id = get_user_id($email);
+    $user_id = $id['id'];
+
+    $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+    get_product_list($user_id,$sheet);
+    $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attactment; filename="'.urlencode('demo.xlsx').'"');
+    $writer->save("php://output");
+
+}
+
