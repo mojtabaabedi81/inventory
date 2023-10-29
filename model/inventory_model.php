@@ -30,7 +30,7 @@ function get_all_product($user_id)
 function get_by_id_product($id)
 {
     global $conn;
-    $query = 'SELECT * FROM inventory_table WHERE id = "$id"';
+    $query = "SELECT * FROM inventory_table WHERE id = $id";
     $stmt = $conn->query($query);
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

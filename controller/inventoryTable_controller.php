@@ -52,10 +52,6 @@ function edit_item()
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $email = $_SESSION['user_email'];
-        $id = (get_user_id($email));
-        $user_id = $id['id'];
-
         required([
             post('product_name'),
             post('product_no'),
@@ -71,8 +67,7 @@ function edit_item()
         $product_price = post('product_price');
         $id = post('id');
 
-        edit_product($product_name, $product_no, $product_category, $product_quantity, $product_price, $id);
-
+        edit_product($product_no, $product_name, $product_category, $product_quantity, $product_price, $id);
         header("Location:" . BASEURL . "/inventoryTable/show");
         exit();
     }
@@ -86,11 +81,19 @@ function excel_export()
 
     $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
     $sheet = $spreadsheet->getActiveSheet();
-    get_product_list($user_id,$sheet);
+    get_product_list($user_id, $sheet);
     $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attactment; filename="'.urlencode('demo.xlsx').'"');
+    header('Content-Disposition: attactment; filename="' . urlencode('demo.xlsx') . '"');
     $writer->save("php://output");
 
 }
 
+function get_product()
+{
+    $id = get('product_id');
+    $response = get_by_id_product($id);
+
+    echo json_encode($response);
+
+}

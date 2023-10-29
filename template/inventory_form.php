@@ -10,10 +10,10 @@
 </head>
 
 <body>
-<form id="logoutForm" action="../user/logout" method="post">
+<form class="position-absolute ps-4" id="logoutForm" action="../user/logout" method="post">
     <button type="submit" class="btn btn-danger">Log Out</button>
 </form>
-<h1>Inventory</h1>
+<h1 class="title-h1">Inventory</h1>
 <div class="modal-body row">
     <div class="col-md-4">
         <form class="form-control" id="inventoryForm" action="/inventoryTable/add_product" method="post">
@@ -40,10 +40,6 @@
             <button type="submit" class="btn btn-primary">Add Item</button>
             <button type="reset" class="btn btn-secondary">Clear Form</button>
         </form>
-
-        <form action="/inventoryTable/excel_export" method="post" name="export_to_excel">
-            <button type="submit" name="export_excel_btn" class="btn btn-primary">Export</button>
-        </form>
     </div>
     <div class="col-md-8">
         <table class="table table-light table-bordered">
@@ -69,14 +65,19 @@
                         <td>' . $item['product_price'] . '</td>
                         <td>' . $item['created_at'] . '</td>
                         <td>
-                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-id="' . $item['id'] . '" data-bs-name="' . $item['product_name'] . '" class="btn btn-warning">Edit</button>
+                            <button onclick="edit(' . $item['id'] . ')" id="edit" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-id="' . $item['id'] . '" class="btn btn-warning">Edit</button>
                             <button class="btn btn-danger" onclick="deleteItem(' . $item['id'] . ')">Delete</button>
                         </td>
                         </tr>';
             }
             ?>
-            </tbody>
+            <
         </table>
+            <form action="/inventoryTable/excel_export" method="post" name="export_to_excel">
+                <button type="submit" name="export_excel_btn" class="btn btn-primary">Export</button>
+            </form>
+
+        </tbody>
     </div>
 </div>
 
@@ -89,7 +90,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">edit item</h1>
             </div>
             <div class="modal-body">
-                <form method="post" action="/inventoryTable/edit_item">
+                <form id="edit-form" method="post" action="/inventoryTable/edit_item">
                     <input name="id" id="sendId" type="hidden" value="">
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Product Number:</label>
@@ -121,7 +122,6 @@
     </div>
 </div>
 <script>
-
     function deleteItem(id) {
         $.post('/inventoryTable/delete_product', {"id": id}).done(function (response) {
             location.reload();
@@ -129,8 +129,20 @@
     }
 
 
-    function edit(data) {
-
+    function edit(product_id) {
+        $.ajax({
+            type: "GET", //we are using GET method to get data from server side
+            url: '/inventoryTable/get_product', // get the route value
+            data: {product_id: product_id}, //set data
+            success: function (response) {//once the request successfully process to the server side it will return result here
+                response = JSON.parse(response);
+                $("#edit-form [name=\"product_no\"]").val(response[0].product_no);
+                $("#edit-form [name=\"product_name\"]").val(response[0].product_name);
+                $("#edit-form [name=\"product_category\"]").val(response[0].product_category);
+                $("#edit-form [name=\"product_quantity\"]").val(response[0].product_quantity);
+                $("#edit-form [name=\"product_price\"]").val(response[0].product_price);
+            }
+        });
     }
 
 
@@ -150,7 +162,6 @@
             const modalTitle = exampleModal.querySelector('.modal-title')
             const modalBodyInput = exampleModal.querySelector('#sendId')
 
-            modalTitle.textContent = `Edit Product ${ProductName}`
             modalBodyInput.value = ProductID
         })
     }
