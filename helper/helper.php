@@ -16,7 +16,7 @@ function post($key)
 
 function get($key)
 {
-    if (empty($_POST["$key"])){
+    if (empty($_GET["$key"])){
         return false;
     }
 

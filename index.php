@@ -28,6 +28,7 @@ if (isset($_SERVER['REQUEST_URI'])) {
 
     if (!empty($query_params[1])) {
         $path = explode('?', $path);
+        $path = $path[0];
     }
     list($controller, $method) = explode('/', $path);
 
