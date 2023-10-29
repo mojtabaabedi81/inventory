@@ -2,7 +2,6 @@
 
 function show()
 {
-//    dd(post('id'));
     $email = $_SESSION['user_email'];
     $id = (get_user_id($email));
     $user_id = $id['id'];
@@ -33,7 +32,7 @@ function add_product()
 
         create_product($user_id, $product_name, $product_no, $product_category, $product_quantity, $product_price);
 
-        header("Location:../inventoryTable/show");
+        header("Location:" . BASEURL . '/inventoryTable/show');
         exit();
     }
 }
@@ -74,7 +73,7 @@ function edit_item()
 
         edit_product($product_name, $product_no, $product_category, $product_quantity, $product_price, $id);
 
-        header("Location:../inventoryTable/show");
+        header("Location:" . BASEURL . "/inventoryTable/show");
         exit();
     }
 }
