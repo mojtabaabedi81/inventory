@@ -12,8 +12,8 @@ function login()
                     $login = user_login($email, $password);
                     if ($login) {
                         $_SESSION['user_email'] = $email;
-                        msg_success('welcome to your panel  '. $email);
-                        header("Location:../inventoryTable/show");
+                        msg_success('welcome to your panel  : ' . $email);
+                        header("Location:" . BASEURL . 'inventoryTable/show');
                         exit();
                     } else {
                         msg_error('email or password wrong !');
@@ -52,8 +52,8 @@ function register()
             $login = user_login($email, $password);
             if ($login) {
                 $_SESSION['user_email'] = $email;
-                msg_success('welcome '. $email);
-                header("Location:../inventoryTable/show");
+                msg_success('welcome ' . $email);
+                header("Location:" . BASEURL . '/inventoryTable/show');
                 exit();
             }
         } else {
@@ -62,7 +62,7 @@ function register()
         }
     } else
         header('Location: ' . BASEURL);
-        msg_error("fill all input");
+    msg_error("fill all input");
 }
 
 function logout()
