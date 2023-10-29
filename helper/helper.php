@@ -6,11 +6,6 @@ function dd(...$value) {
     die();
 }
 
-
-function user_validation(){
-
-}
-
 function post($key)
 {
     if (empty($_POST["$key"])){
