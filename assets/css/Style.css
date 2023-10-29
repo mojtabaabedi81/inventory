@@ -135,14 +135,6 @@ body {
     font-size: 0.75rem;
 }
 
-h1 {
-    background-color: #1b393d;
-    color: white;
-    margin: 10px;
-    text-align: center;
-    padding: 10px 0;
-}
-
 .container {
     max-width: 600px;
     margin: 20px auto;
@@ -193,4 +185,12 @@ li {
 
 .email-signup {
     display: none;
+}
+
+.title-h1{
+    background-color: #1b393d;
+    color: white;
+    margin: 10px;
+    text-align: center;
+    padding: 10px 0;
 }
